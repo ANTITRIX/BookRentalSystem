@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Books</title>
+    <link rel="stylesheet" href="/css/allBooks.css">
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="navbar-list">
+                <li><a href="/userRentals">My Rentals</a></li>
+                <li><a href="/addBook">Add New Book</a></li>
+                <li><a href="/userBooks">My Books</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</head>
+<body>
+<div class="container">
+    <% if (books.length > 0) { %>
+        <ul class="books-list">
+            <% books.forEach(book => { %>
+                <li class="book-item">
+                    <% if (book.thumbnail_path) { %>
+                        <img src="/<%= book.thumbnail_path %>" alt="<%= book.title %>" class="book-thumbnail">
+                    <% } %>
+                    <div class="book-details">
+                        <h2 class="book-title"><%= book.title %></h2>
+                        <p class="book-author"><strong>Author:</strong> <%= book.author %></p>
+                        <p class="book-description"><%= book.description %></p>
+                        <p class="book-rating">
+                            <strong>Rating:</strong>
+                            <span class="star-rating"></span> <!-- Display stars here -->
+                            <%= book.rating %> / 5
+                        </p>
+                    </div>
+                    <div class="clear"></div>
+                    <% if (book.rented) { %>
+                        <button class="Rent-btn" disabled>Rented</button>
+                    <% } else { %>
+                        <button class="Rent-btn" onclick="redirectToRent('<%= book.id %>')">Rent</button>
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No books are currently available for rent.</p>
+    <% } %>
+</div>
+
+<script>
+    function redirectToRent(bookId) {
+        window.location.href = `/allBooks/${bookId}/Rent`;
+    }
+</script>
+
+
+</body>
+</html>

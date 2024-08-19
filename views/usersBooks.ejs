@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= userName %>'s Books</title>
+    <link rel="stylesheet" href="/css/userBooks.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-container">
+        <ul class="navbar-list">
+            <li><a href="/userRentals">My Rentals</a></li>
+            <li><a href="/addBook">Add New Book</a></li>
+            <li><a href="/allBooks">Browse Books</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <% if (books.length > 0) { %>
+        <ul class="books-list">
+            <% books.forEach(book => { %>
+                <li class="book-item">
+                    <% if (book.thumbnail_path) { %>
+                        <img src="/<%= book.thumbnail_path %>" alt="<%= book.title %>" class="book-thumbnail">
+                    <% } %>
+                    <div class="book-details">
+                        <h2 class="book-title"><%= book.title %></h2>
+                        <p class="book-author"><strong>Author:</strong> <%= book.author %></p>
+                        <p class="book-description"><%= book.description %></p>
+                        <div class="buttons-container">
+                            <button class="delete-btn" onclick="redirectToDelete('<%= book.id %>')">Delete</button>
+                            <button class="update-btn" onclick="redirectToUpdate('<%= book.id %>')">Update</button>
+                        </div>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No books found for this user.</p>
+    <% } %>
+</div>
+
+<script>
+    function redirectToUpdate(bookId) {
+        window.location.href = `/userBooks/${bookId}/update`;
+    }
+    function redirectToDelete(bookId){
+        window.location.href = `/userBooks/${bookId}/delete`;
+    }
+</script>
+</body>
+</html>
+
+
+
+

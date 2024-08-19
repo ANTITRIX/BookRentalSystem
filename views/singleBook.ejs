@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit <%= book.title %></title>
+    <link rel="stylesheet" href="/css/singleBook.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edit <%= book.title %></h1>
+
+    <% if (book.thumbnail_path) { %>
+        <img src="/<%= book.thumbnail_path %>" alt="<%= book.title %>" class="book-thumbnail">
+    <% } %>
+
+    <!-- Edit Book Form -->
+    <form action="/userBooks/<%= book.id %>/update" method="POST" enctype="multipart/form-data">
+        <!-- Title -->
+        <div class="input-group">
+            <label for="title">Book Title:</label>
+            <input type="text" id="title" name="title" value="<%= book.title %>" required>
+        </div>
+
+        <!-- Author -->
+        <div class="input-group">
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" value="<%= book.author %>" required>
+        </div>
+
+        <!-- Description -->
+        <div class="input-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" required><%= book.description %></textarea>
+        </div>
+        <div class="input-group">
+            <label for="thumbnail">Thumbnail Image:</label>
+            <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="input-group">
+            <button type="submit">Update Book</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+

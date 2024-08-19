@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Rentals</title>
+    <link rel="stylesheet" href="/css/userRentals.css">
+</head>
+<body>
+<!-- Navigation Bar -->
+<div class="navbar">
+    <div class="navbar-container">
+        <ul class="navbar-list">
+            <li><a href="/">Home</a></li>
+            <li><a href="/allBooks">All Books</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Your Rentals</h1>
+    <% if (rentals.length > 0) { %>
+        <% rentals.forEach(rental => { %>
+            <div class="rental-card">
+                <img src="<%= rental.Book.thumbnail_path %>" alt="<%= rental.Book.title %>" class="thumbnail">
+                <div class="rental-details">
+                    <h2><%= rental.Book.title %></h2>
+                    <p>Author: <%= rental.Book.author %></p>
+                    <p>Description: <%= rental.Book.description %></p>
+                    <p>Current Rating: <%= rental.Book.rating %> / 5</p>
+                    <p>Rental Period: <%= new Date(rental.start_date).toLocaleDateString() %> to <%= new Date(rental.end_date).toLocaleDateString() %></p>
+
+                    <!-- Rating Form -->
+                    <form action="/userRentals/<%= rental.book_id %>/rate" method="POST" class="rating-form">
+                        <div class="star-rating">
+                            <% for (let i = 1; i <= 5; i++) { %>
+                                <input type="radio" id="star-<%= i %>-<%= rental.book_id %>" name="rating" value="<%= i %>" <%= rental.Book.rating == i ? 'checked' : '' %> required>
+                                <label for="star-<%= i %>-<%= rental.book_id %>" class="star">&#9733;</label>
+                            <% } %>
+                        </div>
+                        <button type="submit" class="rate-btn">Submit Rating</button>
+                    </form>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p>You have no rentals at this time.</p>
+    <% } %>
+</div>
+</body>
+</html>
+
+
+
+
+
